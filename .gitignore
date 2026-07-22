@@ -1,0 +1,20 @@
+(
+echo # Backend
+echo backEnd/node_modules/
+echo backEnd/.env
+echo.
+echo # Frontend
+echo frontEnd/node_modules/
+echo frontEnd/.env
+echo.
+echo # Build folders
+echo frontEnd/dist/
+echo backEnd/dist/
+echo.
+echo # Logs
+echo *.log
+echo.
+echo # OS files
+echo .DS_Store
+echo Thumbs.db
+) > .gitignore

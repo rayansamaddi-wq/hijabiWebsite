@@ -1,0 +1,21 @@
+@import "tailwindcss";
+@keyframes cart-added {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.6);
+  }
+
+  30% {
+    opacity: 1;
+    transform: translateY(0) scale(1.2);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-18px) scale(1);
+  }
+}
+
+.animate-cart-added {
+  animation: cart-added 1.2s ease-out forwards;
+}
