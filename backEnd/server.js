@@ -26,7 +26,7 @@ const PORT = process.env.PORT || 5000;
 connectDB();
 
 const __dirname = path.resolve(); // Set {__dirname} to current working directory
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, "public/images")));
 
 // Middlewares
 app.use(
