@@ -29,7 +29,15 @@ const __dirname = path.resolve(); // Set {__dirname} to current working director
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Middlewares
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://hijabi-website-gules.vercel.app"
+    ],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
