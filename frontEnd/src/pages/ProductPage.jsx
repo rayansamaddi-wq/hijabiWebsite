@@ -14,6 +14,7 @@ import Message from '../components/Message';
 import Meta from '../components/Meta';
 import { addCurrency } from '../utils/addCurrency';
 import Reviews from '../components/Reviews';
+import { BASE_URL } from '../constants';
 
 const ProductPage = () => {
   const { id: productId } = useParams();
@@ -91,7 +92,7 @@ const ProductPage = () => {
             {/* Image Section */}
             <div className='lg:col-span-5'>
               <img
-               src={`http://localhost:5000${product.image}`}
+             src={`${BASE_URL}${product.image}`}
                 alt={product.name}
                 className='w-full rounded-lg object-cover'
               />
