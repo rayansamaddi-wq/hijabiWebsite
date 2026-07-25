@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useGetProductsQuery } from '../slices/productsApiSlice';
+import { BASE_URL } from '../constants';
+
 
 const NewArrivalsSection = () => {
   const { data: products, isLoading, error } = useGetProductsQuery({
@@ -48,7 +50,7 @@ const NewArrivalsSection = () => {
               {/* Image */}
               <div className='overflow-hidden bg-[#ddd]'>
                 <img
-                  src={`http://localhost:5000${product.image}`}
+                  src={`${BASE_URL}${product.image}`}
                   alt={product.name}
                   className='h-[420px] w-full object-cover transition duration-500 group-hover:scale-105'
                 />
