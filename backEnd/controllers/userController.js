@@ -124,7 +124,11 @@ export default registerUser;
 
 const logoutUser=(req,res)=>{
 
-  res.clearCookie('jwt',{httpOnly:true});
+  res.clearCookie('jwt', {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+});
   res.status(200).json({message:"logout successfull"})
 }
 
@@ -333,7 +337,8 @@ const resetPasswordRequest = async (req, res, next) => {
       { expiresIn: '15m' }
     );
 
-    const resetUrl = `http://localhost:5173/reset-password/${user._id}/${token}`;
+   const resetUrl =
+`${process.env.FRONTEND_URL}/reset-password/${user._id}/${token}`;
 
     console.log('Reset Link:', resetUrl);
 

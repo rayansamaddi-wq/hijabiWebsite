@@ -10,11 +10,11 @@ export const generateToken = (req, res, userId) => {
   );
 
   res.cookie('jwt', token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-    maxAge: req.body.remember
-      ? 365 * 24 * 60 * 60 * 1000
-      : 24 * 60 * 60 * 1000,
-  });
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+  maxAge: req.body.remember
+    ? 365 * 24 * 60 * 60 * 1000
+    : 24 * 60 * 60 * 1000,
+});
 };
