@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useGetTopProductsQuery } from '../slices/productsApiSlice';
+import { BASE_URL } from '../constants';
 
 const BestsellerSection = () => {
   const { data: products, isLoading, error } = useGetTopProductsQuery();
@@ -45,7 +46,7 @@ const BestsellerSection = () => {
               {/* Image */}
               <div className="overflow-hidden bg-[#ddd]">
                 <img
-                  src={`http://localhost:5000${product.image}`}
+                   src={`${BASE_URL}${product.image}`}
                   alt={product.name}
                   className="w-full h-[520px] object-cover transition duration-500 group-hover:scale-105 cursor-pointer"
                 />
