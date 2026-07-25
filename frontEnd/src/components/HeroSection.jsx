@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useGetTopProductsQuery } from '../slices/productsApiSlice';
+import { BASE_URL } from '../constants';
 
 const HeroSection = () => {
   const { data: products, isLoading } = useGetTopProductsQuery();
@@ -21,7 +22,7 @@ const HeroSection = () => {
       {/* CLICKABLE IMAGE (same pattern as your NewArrivalsSection) */}
       <Link to={`/product/${heroProduct._id}`}>
         <img
-          src={`http://localhost:5000${heroProduct.image}`}
+          src={`${BASE_URL}${heroProduct.image}`}
           alt={heroProduct.name}
           className='absolute right-0 top-0 h-full w-full object-cover lg:object-contain object-right 
                      transition duration-500 hover:scale-[1.02] cursor-pointer'
