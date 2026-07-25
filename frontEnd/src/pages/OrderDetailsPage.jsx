@@ -13,6 +13,7 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Meta from '../components/Meta';
 import { addCurrency } from '../utils/addCurrency';
+import { BASE_URL } from '../constants';
 
 const OrderDetailsPage = () => {
   const { id: orderId } = useParams();
@@ -161,7 +162,7 @@ const OrderDetailsPage = () => {
               {order?.orderItems?.map((item) => (
                 <div key={item._id} className='flex gap-4 py-4'>
                   <img
-                    src={`http://localhost:5000${item.image}`}
+                    src={`${BASE_URL}${item.image}`}
                     className='h-20 w-20 object-cover'
                     alt={item.name}
                   />

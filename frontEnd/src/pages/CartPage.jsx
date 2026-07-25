@@ -7,6 +7,7 @@ import { addToCart, removeFromCart } from '../slices/cartSlice';
 import Meta from '../components/Meta';
 import Message from '../components/Message';
 import { addCurrency } from '../utils/addCurrency';
+import { BASE_URL } from '../constants';
 
 const CartPage = () => {
   const navigate = useNavigate();
@@ -56,7 +57,7 @@ const CartPage = () => {
 
                   {/* IMAGE */}
                   <img
-                      src={`http://localhost:5000${item.image}`}
+                    src={`${BASE_URL}${item.image}`}
                     alt={item.name}
                     className="w-24 h-24 object/-cover rounded"
                   />

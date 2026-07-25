@@ -9,6 +9,7 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Meta from '../components/Meta';
 import { addCurrency } from '../utils/addCurrency';
+import { BASE_URL } from '../constants';
 
 const ProductsPage = () => {
   const [category, setCategory] = useState('');
@@ -151,7 +152,7 @@ const ProductsPage = () => {
                     <Link to={`/product/${product._id}`} className='block'>
                       <div className='aspect-[3/4] overflow-hidden rounded-lg bg-[#f8f5f3]'>
                         <img
-                          src={`http://localhost:5000${product.image}`}
+                         src={`${BASE_URL}${product.image}`}
                           alt={product.name}
                           className='h-full w-full object-cover transition duration-300 group-hover:scale-105'
                         />
