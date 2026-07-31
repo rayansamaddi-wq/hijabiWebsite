@@ -23,6 +23,9 @@ const PlaceOrderPage = () => {
   paymentMethod,
   itemsPrice,
   totalPrice,
+  taxPrice,
+shippingPrice
+
 } = useSelector((state) => state.cart);
 
   const [createOrder, { isLoading }] = useCreateOrderMutation();
