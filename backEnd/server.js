@@ -5,7 +5,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import compression from "compression";
 import transporter from './config/email.js';
-//import { notFound, errorHandler } from './middleware/errorMiddleware.js';
+import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 
 import connectDB from "./config/db.js";
@@ -62,6 +62,10 @@ if (process.env.NODE_ENV === 'production') {
     res.send('Hello, World!');
   });
 }
+
+app.use(notFound);
+app.use(errorHandler);
+
 // Test route
 app.get("/", (req, res) => {
   res.send("API is running...");

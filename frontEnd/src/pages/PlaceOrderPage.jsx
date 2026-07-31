@@ -18,13 +18,13 @@ import { BASE_URL } from '../constants';
 
 const PlaceOrderPage = () => {
   const {
-  cartItems,
-  shippingAddress,
-  paymentMethod,
-  itemsPrice,
-  totalPrice,
-  taxPrice,
-shippingPrice
+   cartItems,
+    shippingAddress,
+    paymentMethod,
+    itemsPrice,
+    taxPrice,
+    shippingPrice,
+    totalPrice
 
 } = useSelector((state) => state.cart);
 

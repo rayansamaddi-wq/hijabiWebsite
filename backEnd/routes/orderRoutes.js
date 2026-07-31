@@ -49,9 +49,13 @@ const validator = {
       .withMessage('Total price must be a number')
   ]
 }
-
 router.route('/')
-  .post( protect, addOrderItems)
+  .post(
+    protect,
+    validator.addOrderItems,
+    validateRequest,
+    addOrderItems
+  )
   .get(protect, admin, getOrders);
 
 router.get('/my-orders', protect, getMyOrders);
