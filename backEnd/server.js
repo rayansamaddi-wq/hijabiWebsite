@@ -29,12 +29,20 @@ const __dirname = path.resolve(); // Set {__dirname} to current working director
 app.use('/uploads', express.static(path.join(__dirname, "public/images")));
 
 // Middlewares
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://hijabi-website-gules.vercel.app",
+];
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://hijabi-website-gules.vercel.app"
-    ],
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
