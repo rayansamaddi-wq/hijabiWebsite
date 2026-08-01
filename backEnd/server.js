@@ -71,13 +71,17 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-app.use(notFound);
-app.use(errorHandler);
+
 
 // Test route
 app.get("/", (req, res) => {
   res.send("API is running...");
 });
+
+
+app.use(notFound);
+app.use(errorHandler);
+
 
 // Start server
 app.listen(PORT, () => {
