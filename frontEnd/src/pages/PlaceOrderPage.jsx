@@ -51,11 +51,22 @@ const PlaceOrderPage = () => {
       // =========================
       // 1. CREATE ORDER FIRST
       // =========================
-   const order = await createOrder({
+      console.log({
   cartItems,
   shippingAddress,
   paymentMethod,
   itemsPrice,
+  taxPrice,
+  shippingPrice,
+  totalPrice,
+});
+ const order = await createOrder({
+cartItems,
+  shippingAddress,
+  paymentMethod,
+  itemsPrice,
+  taxPrice,
+  shippingPrice,
   totalPrice,
 }).unwrap();
 
