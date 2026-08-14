@@ -1,0 +1,13 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://hijabi-backend.onrender.com/api/:path*"
+    },
+     {
+      "source": "/uploads/:path*",
+      "destination": "https://hijabi-backend.onrender.com/uploads/:path*"
+    }
+  ]
+}
+//Every request beginning with /api should be forwarded to Render.
