@@ -15,6 +15,7 @@ import productRoutes from './routes/productRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import paymentRoutes from "./routes/tapPaymentRoutes.js";
+import cartRoutes from "./routes/cartRoutes.js";
 
 
 dotenv.config();
@@ -56,6 +57,7 @@ app.use('/api/v1/products', productRoutes);
 app.use('/api/v1/upload', uploadRoutes)
 app.use('/api/v1/orders', orderRoutes);
 app.use("/api/v1/payment", paymentRoutes);
+app.use("/api/v1/cart", cartRoutes);
 
 
 if (process.env.NODE_ENV === 'production') {
@@ -66,9 +68,7 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
   });
 } else {
-  app.get('/', (req, res) => {
-    res.send('Hello, World!');
-  });
+   // No root route needed in development
 }
 
 

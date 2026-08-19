@@ -31,6 +31,7 @@ const loginUser = async (req, res, next) => {
     }
 
     generateToken(req, res, user._id);
+    console.log("Cookie sent");
 
     res.status(200).json({
       message: 'Login successful.',

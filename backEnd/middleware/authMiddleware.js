@@ -6,6 +6,9 @@ const protect = async (req, res, next) => {
   try {
     const token = req.cookies.jwt;
 
+    console.log("Cookies object:", req.cookies);
+console.log("JWT:", req.cookies.jwt);
+console.log("Headers Cookie:", req.headers.cookie);
     if (!token) {
       res.statusCode = 401;
       throw new Error('Authentication failed: Token not provided.');

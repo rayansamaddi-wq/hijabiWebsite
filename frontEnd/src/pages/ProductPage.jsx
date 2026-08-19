@@ -6,7 +6,8 @@ import {
   useGetProductDetailsQuery,
   useCreateProductReviewMutation
 } from '../slices/productsApiSlice';
-import { addToCart,showCartAdded, hideCartAdded } from '../slices/cartSlice';
+import { setCart, showCartAdded, hideCartAdded } from '../slices/cartSlice';
+import { useAddToCartMutation } from '../slices/cartApiSlice';
 import { toast } from 'react-toastify';
 import Rating from '../components/Rating';
 import Loader from '../components/Loader';
@@ -36,16 +37,37 @@ const ProductPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const addToCartHandler = () => {
-    dispatch(addToCart({ ...product, qty }));
-     dispatch(showCartAdded());
+  const [addToCartApi] = useAddToCartMutation();
+const addToCartHandler = async () => {
+  if (!userInfo) {
+    toast.error('Please login first');
+    navigate('/login');
+    return;
+  }
 
-  setTimeout(() => {
-    dispatch(hideCartAdded());
-  }, 1200);
+  try {
+    const cart = await addToCartApi({
+      product: product._id,
+      name: product.name,
+      image: product.image,
+      price: product.price,
+      countInStock: product.countInStock,
+      qty,
+    }).unwrap();
+
+    dispatch(setCart(cart.cartItems));
+
+    dispatch(showCartAdded());
+
+    setTimeout(() => {
+      dispatch(hideCartAdded());
+    }, 1200);
+
     toast.success('Product added to cart!');
-  };
-
+  } catch (error) {
+    toast.error(error?.data?.message || error.error);
+  }
+};
   const submitHandler = async e => {
     e.preventDefault();
     try {
@@ -92,7 +114,7 @@ const ProductPage = () => {
             {/* Image Section */}
             <div className='lg:col-span-5'>
               <img
-             src={`${BASE_URL}${product.image}`}
+              src={`${BASE_URL}${product.image}`}
                 alt={product.name}
                 className='w-full rounded-lg object-cover'
               />
