@@ -2,6 +2,7 @@ import axios from "axios";
 import tapConfig from "../config/tap.js";
 import { tapHeaders } from "../utils/tapHeaders.js";
 import Order from "../models/orderModel.js";
+import Product from "../models/productModel.js";
 
 
 // ============================================
@@ -233,6 +234,21 @@ console.info(`[Tap] Status: ${event.status}`);
   gateway: "Tap",
   created: event.transaction?.created,
 };
+// Update product stock
+for (const item of order.orderItems) {
+  const product = await Product.findById(item.product);
+
+  if (!product) {
+    continue;
+  }
+
+  product.countInStock = Math.max(
+    0,
+    product.countInStock - item.qty
+  );
+
+  await product.save();
+}
 
     
         order.processedWebhookIds.push(event.id);

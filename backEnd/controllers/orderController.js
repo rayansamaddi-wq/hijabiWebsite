@@ -1,4 +1,5 @@
 import Order from '../models/orderModel.js';
+import Product from '../models/productModel.js';
 
 // @desc     Create new order
 // @method   POST
@@ -15,26 +16,37 @@ const addOrderItems = async (req, res, next) => {
       shippingPrice,
       totalPrice
     } = req.body;
-    console.log(
-      cartItems,
-      shippingAddress,
-      paymentMethod,
-      itemsPrice,
-      taxPrice,
-      shippingPrice,
-      totalPrice
-    );
+
     if (!cartItems || cartItems.length === 0) {
       res.statusCode = 400;
       throw new Error('No order items.');
     }
 
+    // Check stock availability before creating order
+    for (const item of cartItems) {
+      const product = await Product.findById(item.product);
+
+      if (!product) {
+        res.status(404);
+        throw new Error(`${item.name} not found.`);
+      }
+
+      if (product.countInStock < item.qty) {
+        res.status(400);
+        throw new Error(
+          `${product.name} has only ${product.countInStock} item(s) left in stock.`
+        );
+      }
+    }
+
     const order = new Order({
       user: req.user._id,
+
       orderItems: cartItems.map(item => ({
         ...item,
-        product: item._id
+        product: item.product
       })),
+
       shippingAddress,
       paymentMethod,
       itemsPrice,
@@ -46,10 +58,12 @@ const addOrderItems = async (req, res, next) => {
     const createdOrder = await order.save();
 
     res.status(201).json(createdOrder);
+
   } catch (error) {
     next(error);
   }
 };
+
 
 // @desc     Get logged-in user orders
 // @method   GET
@@ -65,10 +79,12 @@ const getMyOrders = async (req, res, next) => {
     }
 
     res.status(200).json(orders);
+
   } catch (error) {
     next(error);
   }
 };
+
 
 // @desc     Get order by ID
 // @method   GET
@@ -78,7 +94,8 @@ const getOrderById = async (req, res, next) => {
   try {
     const { id: orderId } = req.params;
 
-    const order = await Order.findById(orderId).populate('user', 'name email');
+    const order = await Order.findById(orderId)
+      .populate('user', 'name email');
 
     if (!order) {
       res.statusCode = 404;
@@ -86,18 +103,21 @@ const getOrderById = async (req, res, next) => {
     }
 
     res.status(200).json(order);
+
   } catch (error) {
     next(error);
   }
 };
 
+
 // @desc     Update order to paid
 // @method   PUT
 // @endpoint /api/v1/orders/:id/pay
 // @access   Private
-const updateOrderToPaid = async (req, res) => {
+const updateOrderToPaid = async (req, res, next) => {
   try {
     const { id: orderId } = req.params;
+
     const order = await Order.findById(orderId);
 
     if (!order) {
@@ -107,28 +127,25 @@ const updateOrderToPaid = async (req, res) => {
 
     order.isPaid = true;
     order.paidAt = new Date();
-  order.paymentResult = {
-  id: event.id,
-  status: event.status,
-  transaction: event.reference?.transaction,
-  response: event.response,
-};
 
     const updatedOrder = await order.save();
 
     res.status(200).json(updatedOrder);
+
   } catch (error) {
     next(error);
   }
 };
 
+
 // @desc     Update order to delivered
 // @method   PUT
 // @endpoint /api/v1/orders/:id/deliver
 // @access   Private/Admin
-const updateOrderToDeliver = async (req, res) => {
+const updateOrderToDeliver = async (req, res, next) => {
   try {
     const { id: orderId } = req.params;
+
     const order = await Order.findById(orderId);
 
     if (!order) {
@@ -139,13 +156,15 @@ const updateOrderToDeliver = async (req, res) => {
     order.isDelivered = true;
     order.deliveredAt = new Date();
 
-    const updatedDeliver = await order.save();
+    const updatedOrder = await order.save();
 
-    res.status(200).json(updatedDeliver);
+    res.status(200).json(updatedOrder);
+
   } catch (error) {
     next(error);
   }
 };
+
 
 // @desc     Get all orders
 // @method   GET
@@ -153,17 +172,21 @@ const updateOrderToDeliver = async (req, res) => {
 // @access   Private/Admin
 const getOrders = async (req, res, next) => {
   try {
-    const orders = await Order.find().populate('user', 'id name');
+    const orders = await Order.find()
+      .populate('user', 'id name');
 
     if (!orders || orders.length === 0) {
       res.statusCode = 404;
       throw new Error('Orders not found!');
     }
+
     res.status(200).json(orders);
+
   } catch (error) {
     next(error);
   }
 };
+
 
 export {
   addOrderItems,

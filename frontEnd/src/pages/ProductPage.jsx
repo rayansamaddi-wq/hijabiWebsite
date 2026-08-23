@@ -112,12 +112,21 @@ const addToCartHandler = async () => {
           <div className='grid grid-cols-1 lg:grid-cols-12 gap-8'>
             
             {/* Image Section */}
-            <div className='lg:col-span-5'>
-              <img
-              src={`${BASE_URL}${product.image}`}
-                alt={product.name}
-                className='w-full rounded-lg object-cover'
-              />
+            <div className='lg:col-span-5 relative'>
+             <img
+  src={`${BASE_URL}${product.image}`}
+  alt={product.name}
+  className={`w-full rounded-lg object-cover ${
+    product.countInStock === 0
+      ? 'opacity-60'
+      : ''
+  }`}
+/>
+              {product.countInStock === 0 && (
+  <div className="absolute top-4 left-4 bg-red-600 text-white px-4 py-2 rounded-md font-semibold shadow">
+    SOLD OUT
+  </div>
+)}
 
               <div className='hidden md:block mt-8'>
                 <Reviews
@@ -170,11 +179,17 @@ const addToCartHandler = async () => {
 
                   <div className='p-4 flex justify-between items-center'>
                     <span>Status:</span>
-                    <span>
-                      {product.countInStock > 0
-                        ? 'In Stock'
-                        : 'Out Of Stock'}
-                    </span>
+                   <span
+  className={`font-medium ${
+    product.countInStock > 0
+      ? 'text-green-600'
+      : 'text-red-600'
+  }`}
+>
+  {product.countInStock > 0
+    ? 'In Stock'
+    : 'Sold Out'}
+</span>
                   </div>
 
                   {product.countInStock > 0 && (
@@ -200,13 +215,15 @@ const addToCartHandler = async () => {
 
                   <div className='p-4'>
                     <button
-                      className='w-full bg-[#d9b8ae] hover:bg-[#c7a095] transition-colors py-3 rounded-md font-medium disabled:opacity-50'
-                      type='button'
-                      disabled={product.countInStock === 0}
-                      onClick={addToCartHandler}
-                    >
-                      Add To Cart
-                    </button>
+  className='w-full bg-[#d9b8ae] hover:bg-[#c7a095] transition-colors py-3 rounded-md font-medium disabled:opacity-50 disabled:cursor-not-allowed'
+  type='button'
+  disabled={product.countInStock === 0}
+  onClick={addToCartHandler}
+>
+  {product.countInStock > 0
+    ? 'Add To Cart'
+    : 'Sold Out'}
+</button>
                   </div>
                 </div>
               </div>

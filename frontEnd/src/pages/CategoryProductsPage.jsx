@@ -150,12 +150,19 @@ const ProductsPage = () => {
                 {products.map((product) => (
                   <article key={product._id} className='group'>
                     <Link to={`/product/${product._id}`} className='block'>
-                      <div className='aspect-[3/4] overflow-hidden rounded-lg bg-[#f8f5f3]'>
+                      <div className='relative aspect-[3/4] overflow-hidden rounded-lg bg-[#f8f5f3]'>
                         <img
                          src={`${BASE_URL}${product.image}`}
                           alt={product.name}
-                          className='h-full w-full object-cover transition duration-300 group-hover:scale-105'
+                        className={`h-full w-full object-cover transition duration-300 group-hover:scale-105 ${
+  product.countInStock === 0 ? 'opacity-60' : ''
+}`}
                         />
+                        {product.countInStock === 0 && (
+  <div className="absolute top-3 left-3 bg-red-600 text-white text-xs font-semibold px-3 py-1 rounded">
+    SOLD OUT
+  </div>
+)}
                       </div>
 
                       <div className='pt-4'>
@@ -166,6 +173,12 @@ const ProductsPage = () => {
                         <p className='mt-2 text-sm text-gray-600'>
                           {addCurrency(product.price)}
                         </p>
+
+                        {product.countInStock === 0 && (
+  <p className="mt-1 text-sm font-medium text-red-600">
+    Sold Out
+  </p>
+)}
 
                         <p className='mt-1 text-xs text-[#c9a398]'>
                           {product.category}
