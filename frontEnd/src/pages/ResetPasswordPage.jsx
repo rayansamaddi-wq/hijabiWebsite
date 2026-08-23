@@ -66,7 +66,7 @@ const ResetPasswordPage = () => {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="px-3 text-gray-600 hover:text-black"
+                className="px-3 bg-[#d9b8ae] text-white  hover:text-black"
               >
                 {showPassword ? <FaEye /> : <FaEyeSlash />}
               </button>

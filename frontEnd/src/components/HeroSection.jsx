@@ -52,7 +52,7 @@ const HeroSection = () => {
 
             {/* OPTIONAL: make button also go to product */}
             <Link to='/category-page'>
-              <button className='mt-8 bg-[#d9b8ae] hover:bg-[#6d564b] transition-all duration-300 text-white text-xs uppercase tracking-[4px] px-8 py-4 cursor-pointer'>
+              <button className='mt-8 bg-[#d9b8ae] hover:bg-[#6d564b] transition-all duration-300 text-xs uppercase tracking-[4px] px-8 py-4 cursor-pointer'>
                 Shop Now
               </button>
             </Link>
