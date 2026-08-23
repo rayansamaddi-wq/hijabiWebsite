@@ -3,11 +3,13 @@ import { useDispatch } from "react-redux";
 import { clearCartItems } from "../slices/cartSlice";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useClearCartMutation } from "../slices/cartApiSlice";
 
 const PaymentResult = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [clearCart] = useClearCartMutation();
 
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("Verifying your payment...");
@@ -70,13 +72,15 @@ const PaymentResult = () => {
         console.log("===============================");
 
         switch (charge.status) {
-          case "CAPTURED":
-            console.log("✅ PAYMENT CAPTURED");
+         case "CAPTURED":
 
-            dispatch(clearCartItems());
+  console.log("✅ PAYMENT CAPTURED");
 
-            setMessage("✅ Payment successful! Redirecting...");
+  await clearCart();
 
+  dispatch(clearCartItems());
+
+  setMessage("✅ Payment successful! Redirecting...");
             setTimeout(() => {
               navigate("/my-orders");
             }, 2000);
@@ -143,7 +147,7 @@ const PaymentResult = () => {
     };
 
     verifyPayment();
-  }, [dispatch, navigate, searchParams]);
+  }, [dispatch, navigate, searchParams,clearCart]);
 
   return (
     <div className="container mx-auto py-5 text-center">

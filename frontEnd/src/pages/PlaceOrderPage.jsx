@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import { useClearCartMutation } from '../slices/cartApiSlice';
 
 import {
   useCreateOrderMutation,
@@ -31,6 +32,7 @@ const PlaceOrderPage = () => {
   const [createOrder, { isLoading }] = useCreateOrderMutation();
   const [createTapCharge, { isLoading: loadingTap }] =
     useCreateTapChargeMutation();
+   const [clearCart] = useClearCartMutation();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -74,10 +76,15 @@ cartItems,
       // 💵 CASH ON DELIVERY
       // =========================
       if (paymentMethod === 'Cash on Delivery') {
-        dispatch(clearCartItems());
-        navigate(`/order/${order._id}`);
-        return;
-      }
+
+  await clearCart().unwrap();
+
+  dispatch(clearCartItems());
+
+  navigate(`/order/${order._id}`);
+
+  return;
+}
 
       // =========================
       // 💳 TAP PAYMENT
@@ -108,12 +115,18 @@ cartItems,
       // =========================
       // 💰 WISH MONEY (placeholder)
       // =========================
-      if (paymentMethod === 'Wish Money') {
-        toast.info('Wish Money integration coming soon 🚧');
-        dispatch(clearCartItems());
-        navigate(`/order/${order._id}`);
-        return;
-      }
+    if (paymentMethod === 'Wish Money') {
+
+  toast.info('Wish Money integration coming soon 🚧');
+
+  await clearCart().unwrap();
+
+  dispatch(clearCartItems());
+
+  navigate(`/order/${order._id}`);
+
+  return;
+}
 
     } catch (error) {
       toast.error(
