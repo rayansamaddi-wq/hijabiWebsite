@@ -55,6 +55,7 @@ import {
 
   router.post('/reset-password/request', resetPasswordRequest);
 router.post('/reset-password/:id/:token', resetPassword);
+console.log("RESET ROUTE CHECK:", router.stack.map(r => r.route?.path));
   router.post('/login',  loginUser);
   router.post('/logout',logoutUser);
   
@@ -78,4 +79,5 @@ router
   router.get('/test', (req, res) => {
   res.send('users route works');
 });
+
   export default router; 
