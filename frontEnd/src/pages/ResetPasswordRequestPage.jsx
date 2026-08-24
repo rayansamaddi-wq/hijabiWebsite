@@ -55,7 +55,7 @@ const ResetPasswordRequestPage = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 rounded-lg transition"
+            className="w-full bg-[#d9b8ae] hover:bg-[#6d564b] text-white font-semibold py-2 rounded-lg transition"
           >
             {isLoading ? 'Loading...' : 'Submit'}
           </button>
