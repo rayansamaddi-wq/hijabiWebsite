@@ -118,6 +118,20 @@ function App() {
               path='/admin/product/update/:id'
               element={<ProductFormPage />}
             />
+
+            <Route
+              path='/admin/order/:id'
+              element={<OrderDetailsPage/>}
+            />
+
+             
+            <Route
+              path='/admin/order-list'
+              element={<OrderListPage />}
+            />
+
+
+
           </Route>
         </Routes>
       </main>
