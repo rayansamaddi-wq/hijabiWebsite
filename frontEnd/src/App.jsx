@@ -30,6 +30,7 @@ import ProductFormPage from './pages/admin/ProductFormPage';
 import AdminProfilePage from './pages/admin/AdminProfilePage';
 import AdminListPage from './pages/admin/AdminListPage';
 import UpdateUserFormPage from './pages/admin/UpdateUserFormPage';
+import OrderListPage from './pages/admin/OrderListPage';
 import PaymentResult from "./pages/PaymentResult";
 
 // Components
@@ -119,10 +120,7 @@ function App() {
               element={<ProductFormPage />}
             />
 
-            <Route
-              path='/admin/order/:id'
-              element={<OrderDetailsPage/>}
-            />
+         
 
              
             <Route
