@@ -113,6 +113,43 @@ export const getTapCharge = async (req, res) => {
 
     const charge = response.data;
 
+    if (charge.status === "CAPTURED") {
+
+  const orderId = charge.reference?.transaction;
+
+  if (orderId) {
+
+    const order = await Order.findById(orderId);
+
+    if (order && !order.isPaid) {
+
+      order.isPaid = true;
+      order.paidAt = new Date();
+
+      // reduce stock here
+      for (const item of order.orderItems) {
+
+        const product = await Product.findById(item.product);
+
+        if (product) {
+
+          product.countInStock -= item.qty;
+
+          if (product.countInStock < 0) {
+            product.countInStock = 0;
+          }
+
+          await product.save();
+        }
+      }
+
+      await order.save();
+
+      console.log("✅ Order marked as paid:", order._id);
+    }
+  }
+}
+
     // ==========================
     // TAP CHARGE DEBUG
     // ==========================

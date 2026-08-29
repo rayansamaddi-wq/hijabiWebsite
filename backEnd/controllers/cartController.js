@@ -1,5 +1,6 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import Cart from "../models/cartModel.js";
+import Product from '../models/productModel.js';
 
 
 // @desc    Get logged in user's cart
@@ -33,18 +34,28 @@ const getCart = asyncHandler(async (req, res) => {
 
 const addToCart = asyncHandler(async (req, res) => {
 
-    const {
-        product,
-        name,
-        image,
-        price,
-        countInStock,
-        qty,
-    } = req.body;
+    const { product,name, image, price,countInStock, qty, } = req.body;
+   
+    const dbProduct = await Product.findById(product);
 
-    let cart = await Cart.findOne({
-        user: req.user._id,
-    });
+if (!dbProduct) {
+    res.status(404);
+    throw new Error('Product not found');
+}
+
+if (dbProduct.countInStock === 0) {
+    res.status(400);
+    throw new Error('Product is sold out');
+}
+
+if (qty > dbProduct.countInStock) {
+    res.status(400);
+    throw new Error(
+        `Only ${dbProduct.countInStock} item(s) left in stock`
+    );
+}
+
+    let cart = await Cart.findOne({ user: req.user._id, });
 
     if (!cart) {
 
@@ -70,7 +81,7 @@ const addToCart = asyncHandler(async (req, res) => {
             name,
             image,
             price,
-            countInStock,
+          countInStock: dbProduct.countInStock,
             qty,
         });
 

@@ -38,7 +38,14 @@ const ProductPage = () => {
   const dispatch = useDispatch();
 
   const [addToCartApi] = useAddToCartMutation();
+
 const addToCartHandler = async () => {
+ 
+   if(product.countInStock === 0){
+    toast.error("Product is sold out");
+    return;
+  }
+ 
   if (!userInfo) {
     toast.error('Please login first');
     navigate('/login');

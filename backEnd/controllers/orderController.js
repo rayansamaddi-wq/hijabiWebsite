@@ -120,6 +120,11 @@ const updateOrderToPaid = async (req, res, next) => {
 
     const order = await Order.findById(orderId);
 
+    if (order.isPaid) {
+    res.status(400);
+    throw new Error('Order already marked as paid.');
+}
+
     if (!order) {
       res.statusCode = 404;
       throw new Error('Order not found!');
@@ -127,6 +132,20 @@ const updateOrderToPaid = async (req, res, next) => {
 
     order.isPaid = true;
     order.paidAt = new Date();
+    for (const item of order.orderItems) {
+
+    const product = await Product.findById(item.product);
+
+    if (!product) continue;
+
+    product.countInStock -= item.qty;
+
+    if (product.countInStock < 0) {
+        product.countInStock = 0;
+    }
+
+    await product.save();
+}
 
     const updatedOrder = await order.save();
 
