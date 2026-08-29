@@ -80,7 +80,7 @@ const AdminLoginPage = () => {
                   value={email}
                   placeholder='Enter email'
                   onChange={e => setEmail(e.target.value)}
-                  className='w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-yellow-500'
+                  className='w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-pink-500'
                 />
               </div>
 
@@ -93,7 +93,7 @@ const AdminLoginPage = () => {
                   Password
                 </label>
 
-                <div className='flex items-center overflow-hidden rounded-lg border border-gray-300 focus-within:border-yellow-500'>
+                <div className='flex items-center overflow-hidden rounded-lg border border-gray-300 focus-within:border-pink-500'>
                   <input
                     type={showPassword ? 'text' : 'password'}
                     id='password'
@@ -135,7 +135,7 @@ const AdminLoginPage = () => {
               <button
                 type='submit'
                 disabled={isLoading}
-                className='w-full rounded-lg bg-yellow-500 py-3 font-semibold text-white transition hover:bg-yellow-600 disabled:cursor-not-allowed disabled:opacity-70'
+                className='w-full rounded-lg bg-[#d9b8ae] hover:bg-[#6d564b] py-3 font-semibold text-white transition  disabled:cursor-not-allowed disabled:opacity-70'
               >
                 {isLoading ? <Loader /> : 'Sign In'}
               </button>
