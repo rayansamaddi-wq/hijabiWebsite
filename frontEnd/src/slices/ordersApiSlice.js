@@ -24,13 +24,12 @@ export const ordersApiSlice = apiSlice.injectEndpoints({
       providesTags: ['Order']
     }),
     payOrder: builder.mutation({
-      query: ({ orderId, details }) => ({
-        url: `${ORDERS_URL}/${orderId}/pay`,
-        method: 'PUT',
-        body: { ...details }
-      }),
-      invalidatesTags: ['Order']
-    }),
+  query: orderId => ({
+    url: `${ORDERS_URL}/${orderId}/pay`,
+    method: 'PUT',
+  }),
+  invalidatesTags:['Order']
+}),
     updateDeliver: builder.mutation({
       query: orderId => ({
         url: `${ORDERS_URL}/${orderId}/deliver`,

@@ -31,6 +31,8 @@ import AdminProfilePage from './pages/admin/AdminProfilePage';
 import AdminListPage from './pages/admin/AdminListPage';
 import UpdateUserFormPage from './pages/admin/UpdateUserFormPage';
 import OrderListPage from './pages/admin/OrderListPage';
+import AdminOrderDetails from './pages/admin/AdminOrderDetails';
+
 import PaymentResult from "./pages/PaymentResult";
 
 // Components
@@ -126,6 +128,11 @@ function App() {
               path='/admin/order-list'
               element={<OrderListPage />}
             />
+
+            <Route 
+  path="/admin/order/:id"
+  element={<AdminOrderDetails/>}
+/>
 
 
 

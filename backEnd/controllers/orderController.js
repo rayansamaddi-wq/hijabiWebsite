@@ -92,24 +92,32 @@ const getMyOrders = async (req, res, next) => {
 // @access   Private
 const getOrderById = async (req, res, next) => {
   try {
-    const { id: orderId } = req.params;
 
-    const order = await Order.findById(orderId)
+    const order = await Order.findById(req.params.id)
       .populate('user', 'name email');
 
+
     if (!order) {
-      res.statusCode = 404;
+      res.status(404);
       throw new Error('Order not found!');
     }
 
-    res.status(200).json(order);
 
-  } catch (error) {
+    if (
+      !req.user.isAdmin &&
+      order.user._id.toString() !== req.user._id.toString()
+    ) {
+      res.status(401);
+      throw new Error('Not authorized');
+    }
+
+
+    res.json(order);
+
+  } catch(error){
     next(error);
   }
 };
-
-
 // @desc     Update order to paid
 // @method   PUT
 // @endpoint /api/v1/orders/:id/pay

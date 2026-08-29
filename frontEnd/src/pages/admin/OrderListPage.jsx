@@ -7,6 +7,7 @@ import Message from '../../components/Message';
 import Meta from '../../components/Meta';
 import { useSelector } from 'react-redux';
 import { addCurrency } from '../../utils/addCurrency';
+import { Link } from 'react-router-dom';
 
 const OrderListsPage = () => {
   const { data: orders, isLoading, error } = useGetOrdersQuery();
@@ -92,16 +93,16 @@ const OrderListsPage = () => {
                   </td>
 
                   <td className='border-b border-gray-200 px-4 py-3'>
-                    <a
-                      href={
-                        userInfo.isAdmin
-                          ? `/admin/order/${order._id}`
-                          : `/order/${order._id}`
-                      }
-                      className='inline-block rounded bg-cyan-500 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-cyan-600'
-                    >
-                      Details
-                    </a>
+               <Link
+  to={
+    userInfo.isAdmin
+      ? `/admin/order/${order._id}`
+      : `/order/${order._id}`
+  }
+  className='inline-block rounded bg-cyan-500 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-cyan-600'
+>
+  Details
+</Link>
                   </td>
                 </tr>
               ))}
