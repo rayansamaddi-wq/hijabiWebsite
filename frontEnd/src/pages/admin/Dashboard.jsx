@@ -48,7 +48,8 @@ const Dashboard = () => {
       <aside className="
         hidden
         w-72
-        bg-slate-900
+       bg-[#d9b8ae]
+       hover:bg-[#6d564b]
         p-6
         text-white
         lg:block
