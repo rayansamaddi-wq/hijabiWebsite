@@ -215,7 +215,7 @@ const ProductFormPage = () => {
 
               <button
                 type='submit'
-                className='w-full rounded-lg bg-yellow-500 py-3 font-semibold text-white hover:bg-yellow-600'
+                className='w-full rounded-lg  bg-[#ead6ce] py-3 font-semibold text-white hover:bg-pink-600'
               >
                 {isUpdateMode ? 'Update Product' : 'Create Product'}
               </button>
