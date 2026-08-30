@@ -22,10 +22,13 @@ import ProductPriceChart from '../../components/Admin/ProductPriceChart';
 import DashboardCard from '../../components/Admin/DashboardCard';
 
 
+
 const Dashboard = () => {
+
 
   const { data: products, isLoading } = useGetProductsQuery({});
   const { data: users, isLoading: isUsersLoading } = useGetUsersQuery({});
+
 
 
   if (isLoading || isUsersLoading) {
@@ -36,7 +39,7 @@ const Dashboard = () => {
 
   return (
 
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen bg-[#faf7f5]">
 
 
       <Meta title="Admin Dashboard" />
@@ -48,8 +51,7 @@ const Dashboard = () => {
       <aside className="
         hidden
         w-72
-       bg-[#d9b8ae]
-       hover:bg-[#6d564b]
+        bg-[#5b463f]
         p-6
         text-white
         lg:block
@@ -60,7 +62,7 @@ const Dashboard = () => {
           mb-10
           text-3xl
           font-bold
-          text-cyan-400
+          text-[#d9b8ae]
         ">
           Hijabi Admin
         </h1>
@@ -77,11 +79,13 @@ const Dashboard = () => {
           />
 
 
+
           <AdminLink
             to="/admin/product-list"
             icon={<FaBoxOpen />}
             text="Product List"
           />
+
 
 
           <AdminLink
@@ -91,11 +95,13 @@ const Dashboard = () => {
           />
 
 
+
           <AdminLink
             to="/admin/user-list"
             icon={<FaUsers />}
             text="User List"
           />
+
 
 
           <AdminLink
@@ -105,11 +111,13 @@ const Dashboard = () => {
           />
 
 
+
           <AdminLink
             to="/admin/product/create"
             icon={<FaPlusCircle />}
             text="Create Product"
           />
+
 
 
           <AdminLink
@@ -128,7 +136,9 @@ const Dashboard = () => {
 
 
 
-      {/* MAIN */}
+
+
+      {/* MAIN CONTENT */}
 
 
       <main className="
@@ -150,25 +160,30 @@ const Dashboard = () => {
           rounded-xl
           bg-white
           p-6
-          shadow
+          shadow-md
+          border
+          border-[#ead6ce]
         ">
 
 
           <div>
 
+
             <h2 className="
               text-3xl
               font-bold
-              text-gray-800
+              text-[#5b463f]
             ">
               Ecommerce Dashboard
             </h2>
 
 
+
             <p className="
+              mt-2
               text-gray-500
             ">
-              Manage your store performance and customers
+              Manage your Hijabi store performance and customers
             </p>
 
 
@@ -176,20 +191,23 @@ const Dashboard = () => {
 
 
 
+
           <div className="
             rounded-full
-            bg-cyan-100
+            bg-[#ead6ce]
             px-5
             py-2
             font-semibold
-            text-cyan-700
+            text-[#5b463f]
           ">
+
             Administrator
+
           </div>
 
 
-
         </div>
+
 
 
 
@@ -210,38 +228,65 @@ const Dashboard = () => {
 
 
 
+
           <DashboardCard
+
             title="Products"
+
             icon={<FaStore size={30}/>}
+
             value={products?.length || 0}
-            bgColor="bg-blue-500"
+
+            bgColor="bg-[#b58b7c]"
+
           />
 
 
 
+
+
           <DashboardCard
+
             title="Customers"
+
             icon={<FaUsers size={30}/>}
+
             value={users?.length || 0}
-            bgColor="bg-purple-500"
+
+            bgColor="bg-[#8c6f63]"
+
           />
 
 
 
+
+
           <DashboardCard
+
             title="Revenue"
+
             icon={<FaWallet size={30}/>}
+
             value="$0"
-            bgColor="bg-green-500"
+
+            bgColor="bg-[#c08457]"
+
           />
 
 
 
+
+
           <DashboardCard
+
             title="Orders"
+
             icon={<FaShoppingCart size={30}/>}
+
             value="0"
-            bgColor="bg-orange-500"
+
+            bgColor="bg-[#6d564b]"
+
           />
 
 
@@ -254,7 +299,10 @@ const Dashboard = () => {
 
 
 
-        {/* CHART AREA */}
+
+
+        {/* CHART SECTION */}
+
 
 
         <div className="
@@ -267,12 +315,17 @@ const Dashboard = () => {
 
 
 
+
+
           <section className="
             rounded-xl
             bg-white
             p-6
             shadow-md
+            border
+            border-[#ead6ce]
           ">
+
 
 
             <div className="
@@ -282,27 +335,43 @@ const Dashboard = () => {
               justify-between
             ">
 
+
+
               <h3 className="
                 text-xl
                 font-bold
+                text-[#5b463f]
               ">
+
                 Product Analytics
+
               </h3>
 
 
-              <FaChartLine className="text-gray-400"/>
+
+
+              <FaChartLine className="text-[#c08457]" />
+
+
 
             </div>
 
 
 
+
+
             <ProductPriceChart
+
               products={products || []}
+
             />
 
 
 
+
           </section>
+
+
 
 
 
@@ -319,40 +388,59 @@ const Dashboard = () => {
             bg-white
             p-6
             shadow-md
+            border
+            border-[#ead6ce]
           ">
+
 
 
             <div className="text-center">
 
 
+
               <FaShoppingCart
+
                 size={60}
-                className="mx-auto mb-4 text-gray-300"
+
+                className="mx-auto mb-4 text-[#d9b8ae]"
+
               />
+
+
 
 
               <h3 className="
                 text-xl
                 font-bold
-                text-gray-400
+                text-[#5b463f]
               ">
+
                 Sales Analytics
+
               </h3>
+
+
 
 
               <p className="
                 mt-2
                 text-gray-400
               ">
-                Connect Orders API to display revenue charts
+
+                Orders API will power revenue charts
+
               </p>
+
 
 
 
             </div>
 
 
+
           </section>
+
+
 
 
 
@@ -363,7 +451,10 @@ const Dashboard = () => {
 
 
 
-        {/* FUTURE DATA TABLES */}
+
+
+
+        {/* FUTURE TABLES */}
 
 
 
@@ -376,41 +467,67 @@ const Dashboard = () => {
         ">
 
 
+
+
           <DashboardBox
+
             title="Latest Orders"
-            text="Orders API integration coming soon"
+
+            text="Orders analytics coming soon"
+
           />
 
 
+
+
           <DashboardBox
+
             title="Top Selling Products"
-            text="Sales analytics coming soon"
+
+            text="Product performance coming soon"
+
           />
+
+
 
 
           <DashboardBox
+
             title="New Customers"
-            text="Customer growth analytics coming soon"
+
+            text="Customer growth coming soon"
+
           />
+
 
 
         </div>
 
 
 
+
+
       </main>
+
 
 
     </div>
 
+
   );
+
 };
 
 
 
 
 
-// Sidebar Item
+
+
+
+
+// SIDEBAR LINK
+
 
 const AdminLink = ({to, icon, text}) => (
 
@@ -426,16 +543,20 @@ const AdminLink = ({to, icon, text}) => (
       px-4
       py-3
       transition
-      hover:bg-slate-800
-      hover:text-cyan-400
+      duration-300
+      hover:bg-[#d9b8ae]
+      hover:text-[#5b463f]
     "
 
   >
 
     {icon}
 
+
     <span>
+
       {text}
+
     </span>
 
 
@@ -447,7 +568,12 @@ const AdminLink = ({to, icon, text}) => (
 
 
 
-// Dashboard Placeholder Box
+
+
+
+
+// DASHBOARD BOX
+
 
 const DashboardBox = ({title,text}) => (
 
@@ -455,29 +581,39 @@ const DashboardBox = ({title,text}) => (
     rounded-xl
     bg-white
     p-6
-    shadow
+    shadow-md
+    border
+    border-[#ead6ce]
   ">
 
 
     <h3 className="
       text-lg
       font-bold
+      text-[#5b463f]
     ">
+
       {title}
+
     </h3>
+
 
 
     <p className="
       mt-4
       text-gray-400
     ">
+
       {text}
+
     </p>
+
 
 
   </div>
 
 );
+
 
 
 
