@@ -93,12 +93,7 @@ const OrderListsPage = () => {
                   </td>
 
                   <td className='border-b border-gray-200 px-4 py-3'>
-               <Link
-  to={
-    userInfo.isAdmin
-      ? `/admin/order/${order._id}`
-      : `/order/${order._id}`
-  }
+               <Link to={  userInfo.isAdmin ? `/admin/order/${order._id}` : `/order/${order._id}`}
   className='inline-block rounded bg-cyan-500 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-cyan-600'
 >
   Details

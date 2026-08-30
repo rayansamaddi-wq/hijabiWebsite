@@ -6,12 +6,12 @@ import {
   useGetOrderDetailsQuery,
   usePayOrderMutation,
   useUpdateDeliverMutation,
-} from '../slices/ordersApiSlice';
+} from '../../slices/ordersApiSlice';
 
-import Loader from '../components/Loader';
-import Message from '../components/Message';
-import { addCurrency } from '../utils/addCurrency';
-import { BASE_URL } from '../constants';
+import Loader from '../../components/Loader';
+import Message from '../../components/Message';
+import { addCurrency } from '../../utils/addCurrency';
+import { BASE_URL } from '../../constants';
 
 
 const AdminOrderDetails = () => {
