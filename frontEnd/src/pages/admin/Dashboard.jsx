@@ -6,9 +6,12 @@ import {
   FaShoppingCart,
   FaChartLine,
   FaBoxOpen,
-  FaUserCog,
   FaClipboardList,
+  FaUserCog,
+  FaPlusCircle,
 } from 'react-icons/fa';
+
+import { Link } from 'react-router-dom';
 
 import { useGetProductsQuery } from '../../slices/productsApiSlice';
 import { useGetUsersQuery } from '../../slices/usersApiSlice';
@@ -30,118 +33,89 @@ const Dashboard = () => {
   }
 
 
+
   return (
 
     <div className="flex min-h-screen bg-gray-100">
 
+
       <Meta title="Admin Dashboard" />
+
 
 
       {/* SIDEBAR */}
 
       <aside className="
-        hidden 
-        w-64 
-        flex-col 
-        bg-slate-900 
-        p-6 
-        text-white 
-        lg:flex
+        hidden
+        w-72
+        bg-slate-900
+        p-6
+        text-white
+        lg:block
       ">
 
+
         <h1 className="
-          mb-10 
-          text-2xl 
+          mb-10
+          text-3xl
           font-bold
+          text-cyan-400
         ">
           Hijabi Admin
         </h1>
 
 
+
         <nav className="space-y-3">
 
 
-          <button className="
-            flex 
-            w-full 
-            items-center 
-            gap-3 
-            rounded-lg 
-            bg-cyan-500 
-            px-4 
-            py-3
-          ">
-            <FaChartLine />
-            Dashboard
-          </button>
+          <AdminLink
+            to="/admin/dashboard"
+            icon={<FaChartLine />}
+            text="Dashboard"
+          />
 
 
-
-          <button className="
-            flex 
-            w-full 
-            items-center 
-            gap-3 
-            rounded-lg 
-            px-4 
-            py-3
-            transition
-            hover:bg-slate-800
-          ">
-            <FaBoxOpen />
-            Product List
-          </button>
+          <AdminLink
+            to="/admin/product-list"
+            icon={<FaBoxOpen />}
+            text="Product List"
+          />
 
 
-
-          <button className="
-            flex 
-            w-full 
-            items-center 
-            gap-3 
-            rounded-lg 
-            px-4 
-            py-3
-            transition
-            hover:bg-slate-800
-          ">
-            <FaClipboardList />
-            Order List
-          </button>
+          <AdminLink
+            to="/admin/order-list"
+            icon={<FaClipboardList />}
+            text="Order List"
+          />
 
 
-
-          <button className="
-            flex 
-            w-full 
-            items-center 
-            gap-3 
-            rounded-lg 
-            px-4 
-            py-3
-            transition
-            hover:bg-slate-800
-          ">
-            <FaUsers />
-            User List
-          </button>
+          <AdminLink
+            to="/admin/user-list"
+            icon={<FaUsers />}
+            text="User List"
+          />
 
 
+          <AdminLink
+            to="/admin/admin-list"
+            icon={<FaUserCog />}
+            text="Admin List"
+          />
 
-          <button className="
-            flex 
-            w-full 
-            items-center 
-            gap-3 
-            rounded-lg 
-            px-4 
-            py-3
-            transition
-            hover:bg-slate-800
-          ">
-            <FaUserCog />
-            Settings
-          </button>
+
+          <AdminLink
+            to="/admin/product/create"
+            icon={<FaPlusCircle />}
+            text="Create Product"
+          />
+
+
+          <AdminLink
+            to="/admin/profile"
+            icon={<FaUserCog />}
+            text="Profile"
+          />
 
 
         </nav>
@@ -151,7 +125,9 @@ const Dashboard = () => {
 
 
 
-      {/* MAIN CONTENT */}
+
+
+      {/* MAIN */}
 
 
       <main className="
@@ -160,7 +136,10 @@ const Dashboard = () => {
       ">
 
 
+
+
         {/* HEADER */}
+
 
         <div className="
           mb-8
@@ -169,9 +148,10 @@ const Dashboard = () => {
           justify-between
           rounded-xl
           bg-white
-          p-5
+          p-6
           shadow
         ">
+
 
           <div>
 
@@ -180,16 +160,19 @@ const Dashboard = () => {
               font-bold
               text-gray-800
             ">
-              Dashboard Overview
+              Ecommerce Dashboard
             </h2>
+
 
             <p className="
               text-gray-500
             ">
-              Monitor your ecommerce performance
+              Manage your store performance and customers
             </p>
 
+
           </div>
+
 
 
           <div className="
@@ -200,8 +183,9 @@ const Dashboard = () => {
             font-semibold
             text-cyan-700
           ">
-            Admin
+            Administrator
           </div>
+
 
 
         </div>
@@ -209,16 +193,20 @@ const Dashboard = () => {
 
 
 
+
+
         {/* STAT CARDS */}
+
 
 
         <div className="
           grid
           grid-cols-1
           gap-6
-          md:grid-cols-2
+          sm:grid-cols-2
           xl:grid-cols-4
         ">
+
 
 
           <DashboardCard
@@ -229,12 +217,14 @@ const Dashboard = () => {
           />
 
 
+
           <DashboardCard
-            title="Users"
+            title="Customers"
             icon={<FaUsers size={30}/>}
             value={users?.length || 0}
             bgColor="bg-purple-500"
           />
+
 
 
           <DashboardCard
@@ -245,6 +235,7 @@ const Dashboard = () => {
           />
 
 
+
           <DashboardCard
             title="Orders"
             icon={<FaShoppingCart size={30}/>}
@@ -253,13 +244,16 @@ const Dashboard = () => {
           />
 
 
+
         </div>
 
 
 
 
 
-        {/* CHART SECTION */}
+
+
+        {/* CHART AREA */}
 
 
         <div className="
@@ -271,39 +265,58 @@ const Dashboard = () => {
         ">
 
 
-          <div className="
+
+          <section className="
             rounded-xl
             bg-white
             p-6
             shadow-md
           ">
 
-            <h3 className="
+
+            <div className="
               mb-5
-              text-xl
-              font-bold
+              flex
+              items-center
+              justify-between
             ">
-              Product Price Analytics
-            </h3>
+
+              <h3 className="
+                text-xl
+                font-bold
+              ">
+                Product Analytics
+              </h3>
+
+
+              <FaChartLine className="text-gray-400"/>
+
+            </div>
+
 
 
             <ProductPriceChart
               products={products || []}
             />
 
-          </div>
+
+
+          </section>
 
 
 
 
 
-          <div className="
+
+
+          <section className="
             flex
             min-h-[350px]
             items-center
             justify-center
             rounded-xl
             bg-white
+            p-6
             shadow-md
           ">
 
@@ -311,8 +324,8 @@ const Dashboard = () => {
             <div className="text-center">
 
 
-              <FaChartLine 
-                size={50}
+              <FaShoppingCart
+                size={60}
                 className="mx-auto mb-4 text-gray-300"
               />
 
@@ -322,21 +335,24 @@ const Dashboard = () => {
                 font-bold
                 text-gray-400
               ">
-                Revenue Analytics
+                Sales Analytics
               </h3>
 
 
               <p className="
+                mt-2
                 text-gray-400
               ">
-                Connect orders API to display sales charts
+                Connect Orders API to display revenue charts
               </p>
+
 
 
             </div>
 
 
-          </div>
+          </section>
+
 
 
         </div>
@@ -344,7 +360,10 @@ const Dashboard = () => {
 
 
 
-        {/* TABLE PLACEHOLDERS */}
+
+
+        {/* FUTURE DATA TABLES */}
+
 
 
         <div className="
@@ -356,61 +375,22 @@ const Dashboard = () => {
         ">
 
 
-          <div className="
-            rounded-xl
-            bg-white
-            p-6
-            shadow
-          ">
-
-            <h3 className="font-bold">
-              Latest Orders
-            </h3>
-
-            <p className="mt-5 text-gray-400">
-              Orders API coming soon...
-            </p>
-
-          </div>
+          <DashboardBox
+            title="Latest Orders"
+            text="Orders API integration coming soon"
+          />
 
 
-
-          <div className="
-            rounded-xl
-            bg-white
-            p-6
-            shadow
-          ">
-
-            <h3 className="font-bold">
-              Top Products
-            </h3>
-
-            <p className="mt-5 text-gray-400">
-              Product analytics coming soon...
-            </p>
-
-          </div>
+          <DashboardBox
+            title="Top Selling Products"
+            text="Sales analytics coming soon"
+          />
 
 
-
-
-          <div className="
-            rounded-xl
-            bg-white
-            p-6
-            shadow
-          ">
-
-            <h3 className="font-bold">
-              Recent Users
-            </h3>
-
-            <p className="mt-5 text-gray-400">
-              Users API coming soon...
-            </p>
-
-          </div>
+          <DashboardBox
+            title="New Customers"
+            text="Customer growth analytics coming soon"
+          />
 
 
         </div>
@@ -424,6 +404,80 @@ const Dashboard = () => {
 
   );
 };
+
+
+
+
+
+// Sidebar Item
+
+const AdminLink = ({to, icon, text}) => (
+
+  <Link
+
+    to={to}
+
+    className="
+      flex
+      items-center
+      gap-3
+      rounded-lg
+      px-4
+      py-3
+      transition
+      hover:bg-slate-800
+      hover:text-cyan-400
+    "
+
+  >
+
+    {icon}
+
+    <span>
+      {text}
+    </span>
+
+
+  </Link>
+
+);
+
+
+
+
+
+// Dashboard Placeholder Box
+
+const DashboardBox = ({title,text}) => (
+
+  <div className="
+    rounded-xl
+    bg-white
+    p-6
+    shadow
+  ">
+
+
+    <h3 className="
+      text-lg
+      font-bold
+    ">
+      {title}
+    </h3>
+
+
+    <p className="
+      mt-4
+      text-gray-400
+    ">
+      {text}
+    </p>
+
+
+  </div>
+
+);
+
 
 
 export default Dashboard;
