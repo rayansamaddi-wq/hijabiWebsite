@@ -2,7 +2,7 @@ import User from '../models/userModel.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { generateToken } from '../utils/generateToken.js';
-import transporter from '../config/email.js';
+import sendEmail from '../config/email.js';
 
 // @desc     Auth user & get token
 // @method   POST
@@ -343,12 +343,12 @@ const resetPasswordRequest = async (req, res, next) => {
 
     console.log('Reset Link:', resetUrl);
 
-    await transporter.sendMail({
-      from: `"MERN Shop" <${process.env.EMAIL_FROM}>`, // ✅ fixed format
+    await sendEmail({
+     
       to: user.email,
-      subject: 'Password Reset',
+      subject: 'Reset Password',
       html: `
-        <h2>Password Reset</h2>
+        <h2> Reset Password</h2>
         <p>Hi ${user.name},</p>
         <p>Click the button below to reset your password:</p>
 

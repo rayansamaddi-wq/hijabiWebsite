@@ -1,32 +1,14 @@
-import dotenv from "dotenv";
-dotenv.config();
+import { Resend } from 'resend';
 
-import nodemailer from "nodemailer";
-import dns from "dns";
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-dns.setDefaultResultOrder("ipv4first");
+const sendEmail = async ({ to, subject, html }) => {
+  await resend.emails.send({
+    from: process.env.EMAIL_FROM,
+    to,
+    subject,
+    html,
+  });
+};
 
-// Debug DNS
-dns.lookup("smtp.gmail.com", { all: true }, (err, addresses) => {
-  if (err) {
-    console.error("DNS lookup failed:", err);
-  } else {
-    console.log("DNS lookup:", addresses);
-  }
-});
-
-console.log("EMAIL_USER:", process.env.EMAIL_USER);
-console.log("EMAIL_PASS:", process.env.EMAIL_PASS);
-
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
-  requireTLS: true,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
-
-export default transporter;
+export default sendEmail;
